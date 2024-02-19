@@ -1,0 +1,26 @@
+server:
+  port: 8090  # Spring boot Server port
+
+spring:
+  h2:
+    console:
+      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
+      path: /h2  # 콘솔의 경로
+
+  datasource:
+    driver-class-name: org.h2.Driver  #h2 드라이버 설정
+    url: jdbc:h2:mem:testdb  #접속 URL
+    username: test  # 사용자 이름 (로그인 시 사용)
+    password:   # 사용자 암호 (로그인 시 사용)
+
+  jpa:
+    open-in-view: false #JPA를 잘 알아야 이해가 가능해서 생략
+    generate-ddl: true #DDL 생성옵션
+    show-sql: true #실행시 sql문을 보여줌
+    hibernate:
+      ddl-auto: create-drop
+      #update - 서버를 재시작해도 초기화되지않음
+      #create - 서버를 재시작할때마다 기존 테이블들을 drop하고 생성된 DDL을 실행함
+      #create-drop - 언뜻보면 create와 비슷하지만 SessionFactiory가 종료될 때 drop을실행
+      #validate - 변경된 스키마가 있으면 변경점을 출력 후 서버 종료
+      #none - 아무것도 실행하지 않음(대부분의 DB에서 기본값)
