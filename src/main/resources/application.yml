@@ -24,3 +24,7 @@ spring:
       #create-drop - 언뜻보면 create와 비슷하지만 SessionFactiory가 종료될 때 drop을실행
       #validate - 변경된 스키마가 있으면 변경점을 출력 후 서버 종료
       #none - 아무것도 실행하지 않음(대부분의 DB에서 기본값)
+logging:
+  level:
+    root: info
+    com.project.health: debug

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>질병코드</th>
+                <th>예측일자</th>
+                <th>지역코드</th>
+                <th>하위지역코드</th>
+                <th>질병 예측진료건수</th>
+                <th>질병 예측위험도</th>
+                <th>질병 위험도 지침</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--            <p th:text="${result}"/>-->
+            <tr th:each="result2 : ${result}">
+                <td th:text="${result2.dissCd}"></td>
+                <td th:text="${result2.dt}"></td>
+                <td th:text="${result2.znCd}"></td>
+                <td th:text="${result2.lowrnkZnCd}"></td>
+                <td th:text="${result2.cnt}"></td>
+                <td th:text="${result2.risk}"></td>
+                <td th:text="${result2.dissRiskXpln}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
