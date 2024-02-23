@@ -8,9 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "DISEASE_RISK_GRADE_CODE")
+@Table(name = "RISK_GRADE_CODE")
 @Getter
-public class DiseaseRiskGradeCode {
+public class RiskGradeCode {
 
     @Id
     @Column(name = "risk")

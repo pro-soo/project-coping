@@ -17,6 +17,10 @@ public class DiseaseForeCastInfoService {
 
     private final DiseaseForeCastInfoRepository diseaseForeCastInfoRepository;
 
+    /***
+     * 질병예상정보 저장
+     * @param itemList
+     */
     public void saveDissForeCastInfo(List<Map<String, Object>> itemList) {
         for (Map<String, Object> itemMap : itemList) {
             DiseaseForecastInfo diseaseForecastInfo = DiseaseForecastInfo.builder()
@@ -33,9 +37,17 @@ public class DiseaseForeCastInfoService {
         }
     }
 
-    public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String dissCd, String prmZnCd) {
-        List<DiseaseForeCastInfoDto> testList = diseaseForeCastInfoRepository.searchDissInfoList(dissCd, prmZnCd);
+
+    /***
+     * 질병예상정보 리스트 호출
+     * @param dissCd
+     * @param prmZnCd
+     * @return
+     */
+    public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String prmDissCd, String prmZnCd) {
+        List<DiseaseForeCastInfoDto> testList = diseaseForeCastInfoRepository.searchDissInfoList(prmDissCd, prmZnCd);
         log.debug("testList ::: "+testList.toString());
         return testList;
     }
+
 }

@@ -12,6 +12,11 @@ import java.util.List;
 @Repository
 public interface DiseaseForeCastInfoRepository extends JpaRepository<DiseaseForecastInfo,String> {
 
-    @Query(value = "select new com.project.health.dto.DiseaseForeCastInfoDto(d, r) from DiseaseForecastInfo d left join RegionCode r on d.znCd = r.znCd and d.lowrnkZnCd = r.lowrnkZnCd where d.dissCd = :dissCd and r.znCd=:znCd")
+    @Query(value = "select new com.project.health.dto.DiseaseForeCastInfoDto(d, r, c, g) " +
+            "from DiseaseForecastInfo d " +
+            "left join RegionCode r on d.znCd = r.znCd and d.lowrnkZnCd = r.lowrnkZnCd " +
+            "left join DiseaseCode c on d.dissCd = c.dissCd " +
+            "left join RiskGradeCode g on d.risk = g.risk " +
+            "where d.dissCd = :dissCd and r.znCd=:znCd")
     List<DiseaseForeCastInfoDto> searchDissInfoList (@Param("dissCd") String dissCd, @Param("znCd") String znCd);
 }

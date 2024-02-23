@@ -31,6 +31,11 @@ public class ApiController {
     private final DiseaseForeCastInfoService diseaseForeCastInfoService;
     private final RegionCodeService regionCodeService;
 
+    /***
+     * 메인화면
+     * @param model
+     * @return
+     */
     @GetMapping("/api")
     public String getOpenApi(Model model) {
 
@@ -104,8 +109,29 @@ public class ApiController {
         return itemList;
     }
 
+    /***
+     * 검색
+     * @param model
+     * @param prmZnCd
+     * @return
+     */
     @PostMapping("/api")
-    public void getOpenApi (Model model, @RequestParam("znCd") String znCd){
-        log.debug("test2 ::: "+znCd);
+    public String getOpenApi (Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("dissCd") String prmDissCd){
+        log.debug("test2 ::: "+prmZnCd);
+        try {
+            /*URL*/
+            List<Map<String, Object>> itemList = getAPIList(prmDissCd,prmZnCd);
+
+            // OPEN API 정보 저장
+            diseaseForeCastInfoService.saveDissForeCastInfo(itemList);
+
+            model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
+            model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
+        } catch (Exception e) {
+            log.error("ERROR 발생!");
+            e.printStackTrace();
+        }
+
+        return "test";
     }
 }
