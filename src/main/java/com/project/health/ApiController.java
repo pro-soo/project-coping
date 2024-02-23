@@ -39,6 +39,7 @@ public class ApiController {
             /*URL*/
             List<Map<String, Object>> itemList = getAPIList("3","29");
 
+            // OPEN API 정보 저장
             diseaseForeCastInfoService.saveDissForeCastInfo(itemList);
 
 //            log.debug("znCd :::::::: " + itemList.get(0).get("znCd").toString());
@@ -46,8 +47,8 @@ public class ApiController {
             String prmZnCd= itemList.get(0).get("znCd").toString();
             String prmDissCd= itemList.get(0).get("dissCd").toString();
 
-            model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd));
-            model.addAttribute("region", regionCodeService.getRegionCodes(itemList.get(0).get("znCd").toString()));
+            model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
+            model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
         } catch (Exception e) {
             log.error("ERROR 발생!");
             e.printStackTrace();

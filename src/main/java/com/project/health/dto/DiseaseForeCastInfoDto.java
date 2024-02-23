@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
 
 @Getter
-@Builder
 @Slf4j
 @ToString
 public class DiseaseForeCastInfoDto {
@@ -24,16 +23,14 @@ public class DiseaseForeCastInfoDto {
     private String risk; //질병 예측위험도
     private String dissRiskXpln; //질병 위험도지침
 
-    public static DiseaseForeCastInfoDto from (DiseaseForecastInfo diseaseForecastInfo){
+    public DiseaseForeCastInfoDto (DiseaseForecastInfo diseaseForecastInfo, RegionCode regionCode){
         log.debug(" ======== DiseaseForeCastInfoDto ======= ");
-        if(diseaseForecastInfo == null) return null;
-        return DiseaseForeCastInfoDto.builder()
-                .lowrnkZnCdNm("")
-                .znCdNm("")
-                .dissCd(diseaseForecastInfo.getDissCd())
-                .dt(diseaseForecastInfo.getDt())
-                .cnt(String.valueOf(diseaseForecastInfo.getCnt()))
-                .risk(String.valueOf(diseaseForecastInfo.getRisk()))
-                .dissRiskXpln(diseaseForecastInfo.getDissRiskXpln()).build();
+        this.lowrnkZnCdNm = regionCode.getLowrnkZnCdNm();
+        this.znCdNm = regionCode.getZnCdNm();
+        this.dissCd = diseaseForecastInfo.getDissCd();
+        this.dt = diseaseForecastInfo.getDt();
+        this.cnt = String.valueOf(diseaseForecastInfo.getCnt());
+        this.risk = String.valueOf(diseaseForecastInfo.getRisk());
+        this.dissRiskXpln = diseaseForecastInfo.getDissRiskXpln();
     }
 }

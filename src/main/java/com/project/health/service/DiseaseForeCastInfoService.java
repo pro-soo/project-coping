@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service("DiseaseForeCastInfo")
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class DiseaseForeCastInfoService {
 
     private final DiseaseForeCastInfoRepository diseaseForeCastInfoRepository;
 
-    public void saveDissForeCastInfo(List<Map<String, Object>> itemList){
+    public void saveDissForeCastInfo(List<Map<String, Object>> itemList) {
         for (Map<String, Object> itemMap : itemList) {
             DiseaseForecastInfo diseaseForecastInfo = DiseaseForecastInfo.builder()
                     .dissCd(itemMap.get("dissCd").toString())
@@ -33,9 +32,10 @@ public class DiseaseForeCastInfoService {
             diseaseForeCastInfoRepository.save(diseaseForecastInfo);
         }
     }
-    public List<DiseaseForecastInfo> getDissForeCastInfoList(String dissCd){
-        List<DiseaseForecastInfo> diseaseForeCastInfoDtoList = diseaseForeCastInfoRepository.searchDissInfoList(dissCd);
-        log.debug("getDissForeCastInfoList =========== " + diseaseForeCastInfoDtoList);
-        return diseaseForeCastInfoDtoList;
+
+    public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String dissCd, String prmZnCd) {
+        List<DiseaseForeCastInfoDto> testList = diseaseForeCastInfoRepository.searchDissInfoList(dissCd, prmZnCd);
+        log.debug("testList ::: "+testList.toString());
+        return testList;
     }
 }
