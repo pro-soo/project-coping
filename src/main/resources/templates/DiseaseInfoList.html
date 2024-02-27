@@ -23,42 +23,41 @@
 
     var titleList = [[${result}]];
 
-
-    for (var i = 0; i < titleList.length; i++) {
-        var cnt = 0;
-        // 주소로 좌표를 검색합니다
-        geocoder.addressSearch(titleList[i].znCdNm+" "+titleList[i].lowrnkZnCdNm, function (result, status) {
-
+    // 주소로 좌표를 검색하는 함수 정의
+    function searchAddressAndCreateMarker(index) {
+        geocoder.addressSearch(titleList[index].znCdNm + " " + titleList[index].lowrnkZnCdNm, function (result, status) {
             // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
                 // 결과값으로 받은 위치를 마커로 표시합니다
                 var marker = new kakao.maps.Marker({
                     map: map,
                     position: coords
                 });
                 map.setCenter(coords);
-
                 // 마커를 지도에 표시합니다.
                 marker.setMap(map);
 
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-                var iwContent = '<div style="padding:5px;">'+titleList[cnt].cnt+' 건</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-                    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                var iwContent = '<div style="padding:5px;">' + titleList[index].cnt + ' 건</div>',
+                    iwRemoveable = true;
+
                 // 인포윈도우를 생성합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content : iwContent,
-                    removable : iwRemoveable
+                    content: iwContent,
+                    removable: iwRemoveable
                 });
-                    // 마커 위에 인포윈도우를 표시합니다
-                    infowindow.open(map, marker);
-                cnt++;
+
+                // 마커 위에 인포윈도우를 표시합니다
+                infowindow.open(map, marker);
             }
         });
-
     }
 
+    for (var i = 0; i < titleList.length; i++) {
+        console.log("i >>>>>>>>>>>> " + i);
+        searchAddressAndCreateMarker(i);
+    }
 </script>
 <div>
     <table>
@@ -74,8 +73,7 @@
         </tr>
         </thead>
         <tbody>
-        <!--            <p th:text="${result}"/>-->
-                    <p th:text="${region}"/>
+<!--        <p th:text="${result}"/>-->
         <form th:action="@{/api}" method="post">
             <label>
                 <select th:name="znCd">
@@ -93,14 +91,14 @@
             </label>
             <button type="submit">조회</button>
         </form>
-        <tr th:each="result2 : ${result}">
-            <td th:text="${result2.dt}"></td>
-            <td th:text="${result2.znCdNm}"></td>
-            <td th:text="${result2.lowrnkZnCdNm}"></td>
-            <td th:text="${result2.dissCdNm}"></td>
-            <td th:text="${result2.riskNm}"></td>
-            <td th:text="${result2.cnt}"></td>
-            <td th:text="${result2.dissRiskXpln}"></td>
+        <tr th:each="diseaseInfoList : ${result}">
+            <td th:text="${diseaseInfoList.dt}"></td>
+            <td th:text="${diseaseInfoList.znCdNm}"></td>
+            <td th:text="${diseaseInfoList.lowrnkZnCdNm}"></td>
+            <td th:text="${diseaseInfoList.dissCdNm}"></td>
+            <td th:text="${diseaseInfoList.riskNm}"></td>
+            <td th:text="${diseaseInfoList.cnt}"></td>
+            <td th:text="${diseaseInfoList.dissRiskXpln}"></td>
         </tr>
         </tbody>
     </table>

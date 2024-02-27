@@ -18,12 +18,12 @@ public class RegionCodeService {
 
     /***
      * 카카오 맵 api에 사용될 지역정보 조회
-     * @param znCd
+     * @param prmZnCdNm
      * @return
      */
-    public List<RegionCodeDto> getRegionCodes(String znCd){
-        log.debug("getRegionCodes znCd "+znCd);
-        List<RegionCode> regionCodes = regionCodeRepository.findAllRegionInfo(znCd);
+    public List<RegionCodeDto> getRegionCodes(String prmZnCdNm){
+        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
+        List<RegionCode> regionCodes = regionCodeRepository.findAllRegionInfo(prmZnCdNm);
         return regionCodes.stream().map(RegionCodeDto::from).collect(Collectors.toList());
     }
 }
