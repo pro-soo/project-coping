@@ -1,5 +1,6 @@
 package com.project.health;
 
+import com.project.health.dto.DiseaseForeCastInfoDto;
 import com.project.health.service.DiseaseForeCastInfoService;
 import com.project.health.service.RegionCodeService;
 import lombok.RequiredArgsConstructor;
@@ -44,16 +45,11 @@ public class ApiController {
             /*URL*/
             List<Map<String, Object>> itemList = getAPIList("3","29");
 
-            // OPEN API 정보 저장
-            diseaseForeCastInfoService.saveDissForeCastInfo(itemList);
-
-//            log.debug("znCd :::::::: " + itemList.get(0).get("znCd").toString());
+            //            log.debug("znCd :::::::: " + itemList.get(0).get("znCd").toString());
 //            log.debug("regionCodeService.getRegionCodes :::::::: " + regionCodeService.getRegionCodes(itemList.get(0).get("znCd").toString()));
             String prmZnCd= itemList.get(0).get("znCd").toString();
             String prmDissCd= itemList.get(0).get("dissCd").toString();
 
-
-            log.debug("ApiController - getDissForeCastInfoList :: "+diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
             model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
             model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
         } catch (Exception e) {
@@ -64,7 +60,7 @@ public class ApiController {
         return "test";
     }
 
-    private static List<Map<String, Object>> getAPIList(String dissCd, String znCd) throws IOException, ParseException {
+    private List<Map<String, Object>> getAPIList(String dissCd, String znCd) throws IOException, ParseException {
 
         if(StringUtils.isEmpty(dissCd)){
             dissCd = "1";
@@ -108,6 +104,19 @@ public class ApiController {
         log.debug("json jsonBodyObject : " + jsonBodyObject.get("items"));
 
         List<Map<String, Object>> itemList = (List<Map<String, Object>>) jsonBodyObject.get("items");
+
+
+        String prmZnCd= itemList.get(0).get("znCd").toString();
+        String prmDissCd= itemList.get(0).get("dissCd").toString();
+
+        int infoCnt = diseaseForeCastInfoService.getDissForeCastInfoCount(prmDissCd, prmZnCd);
+        log.debug("중복 체크 - infoCnt : " + infoCnt);
+
+        if (infoCnt == 0){
+            // OPEN API 정보 저장
+            diseaseForeCastInfoService.saveDissForeCastInfo(itemList);;
+        }
+
         return itemList;
     }
 
@@ -123,9 +132,7 @@ public class ApiController {
         try {
             /*URL*/
             List<Map<String, Object>> itemList = getAPIList(prmDissCd,prmZnCd);
-
-            // OPEN API 정보 저장
-            diseaseForeCastInfoService.saveDissForeCastInfo(itemList);
+            log.debug("json itemList : " + itemList.toString());
 
             model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
             model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));

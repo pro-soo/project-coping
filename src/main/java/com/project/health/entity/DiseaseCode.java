@@ -1,5 +1,6 @@
 package com.project.health.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -17,4 +18,12 @@ public class DiseaseCode {
     private String dissCd; //질병코드
     private String dissCdNm; //질병명
 
+    @Builder
+    public DiseaseCode(String dissCd) {
+        this.dissCd = dissCd;
+    }
+
+    public DiseaseCode() {
+
+    }
 }

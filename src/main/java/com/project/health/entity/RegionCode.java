@@ -18,12 +18,20 @@ import javax.persistence.Table;
 @ToString
 public class RegionCode {
 
-    @Id
-    @Column(name = "zn_cd_id")
-    private Long id;
+
     private String znCd; //상위 지역코드
     private String znCdNm; //지역명
+    @Id
+    @Column(name = "lowrnk_zn_cd")
     private String lowrnkZnCd; //시군구 지역코드
     private String lowrnkZnCdNm; //시군구명
 
+    @Builder
+    public RegionCode(String lowrnkZnCd){
+        this.lowrnkZnCd = lowrnkZnCd;
+    }
+
+    public RegionCode(){
+
+    }
 }
