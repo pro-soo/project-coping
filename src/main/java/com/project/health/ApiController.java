@@ -52,6 +52,8 @@ public class ApiController {
             String prmZnCd= itemList.get(0).get("znCd").toString();
             String prmDissCd= itemList.get(0).get("dissCd").toString();
 
+
+            log.debug("ApiController - getDissForeCastInfoList :: "+diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
             model.addAttribute("result", diseaseForeCastInfoService.getDissForeCastInfoList(prmDissCd, prmZnCd));
             model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
         } catch (Exception e) {

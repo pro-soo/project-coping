@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface RegionCodeRepository extends JpaRepository<RegionCode, String> {
 
-    @Query("select r from RegionCode r where r.znCd = :znCd")
+    @Query("select r from RegionCode r where r.znCd = :znCd order by r.id")
     List<RegionCode> findAllRegionInfo(@Param("znCd") String znCd);
 }

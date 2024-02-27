@@ -40,7 +40,7 @@ public class DiseaseForeCastInfoService {
 
     /***
      * 질병예상정보 리스트 호출
-     * @param dissCd
+     * @param prmDissCd
      * @param prmZnCd
      * @return
      */
