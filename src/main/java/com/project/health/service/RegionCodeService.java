@@ -16,11 +16,14 @@ import java.util.stream.Collectors;
 public class RegionCodeService {
     private final RegionCodeRepository regionCodeRepository;
 
+    /***
+     * 카카오 맵 api에 사용될 지역정보 조회
+     * @param znCd
+     * @return
+     */
     public List<RegionCodeDto> getRegionCodes(String znCd){
         log.debug("getRegionCodes znCd "+znCd);
-//        log.debug("sss : "+regionCodeRepository.findAllRegionInfo(znCd));
         List<RegionCode> regionCodes = regionCodeRepository.findAllRegionInfo(znCd);
-//        log.debug("regionCodes :: "+regionCodes.toString());
         return regionCodes.stream().map(RegionCodeDto::from).collect(Collectors.toList());
     }
 }

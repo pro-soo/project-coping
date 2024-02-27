@@ -7,12 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface DiseaseForeCastInfoRepository extends JpaRepository<DiseaseForecastInfo,String> {
 
+    /***
+     *  질병예상정보 리스트 호출
+     * @param dissCd
+     * @param znCd
+     * @param dt
+     * @return
+     */
     @Query(value = "select new com.project.health.dto.DiseaseForeCastInfoDto(a, b, c, d) " +
             "from DiseaseForecastInfo a " +
             "left join RegionCode b on a.regionCode.lowrnkZnCd = b.lowrnkZnCd " +
@@ -23,8 +29,19 @@ public interface DiseaseForeCastInfoRepository extends JpaRepository<DiseaseFore
             "and b.znCd=:znCd")
     List<DiseaseForeCastInfoDto> searchDissInfoList (@Param("dissCd") String dissCd, @Param("znCd") String znCd, @Param("dt") String dt);
 
+    /***
+     * 질병예상정보 전체 건수
+     * @return
+     */
     @Query(value = "select count(d) from DiseaseForecastInfo d")
-    int countDissInfoList ();
+    int allCountDissInfoList();
+
+    /***
+     * 질병예상정보 중복 조회
+     * @param dissCd
+     * @param znCd
+     * @return
+     */
     @Query(value = "select count(d) from DiseaseForecastInfo d where d.diseaseCode.dissCd = :dissCd and d.regionCode.znCd = :znCd")
-    int countDissInfo (@Param("dissCd") String dissCd, @Param("znCd") String znCd);
+    int duplCountDissInfo(@Param("dissCd") String dissCd, @Param("znCd") String znCd);
 }
