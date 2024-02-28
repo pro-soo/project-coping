@@ -3,6 +3,7 @@ package com.project.health.service;
 import com.project.health.dto.DiseaseForeCastInfoDto;
 import com.project.health.entity.DiseaseForecastInfo;
 import com.project.health.repository.DiseaseForeCastInfoRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -21,6 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Service("DiseaseForeCastInfo")
 @RequiredArgsConstructor
@@ -69,10 +73,10 @@ public class DiseaseForeCastInfoService {
 
         Date now = new Date();
         String nowTime = sdf.format(now);
-
-        List<DiseaseForeCastInfoDto> infoList = diseaseForeCastInfoRepository.searchDissInfoList(prmDissCd, prmZnCd, nowTime);
-        log.debug("testList ::: " + infoList.toString());
-        return infoList;
+//        log.debug("prmDissCd, prmZnCd ::: " + prmDissCd+", "+prmZnCd);
+        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmDissCd, prmZnCd, nowTime);
+//        log.debug("getDissForeCastInfoList - list >>>>>> "+list.toString());
+        return DiseaseForeCastInfoDto.fromList(list);
     }
 
     /***
@@ -95,17 +99,17 @@ public class DiseaseForeCastInfoService {
      */
     public List<DiseaseForeCastInfoDto> getAPIList(String dissCd, String znCd) throws IOException, ParseException {
         List<DiseaseForeCastInfoDto> diseaseForeCastInfoDto = null;
-        if (StringUtils.isEmpty(dissCd)) {
+        if (isEmpty(dissCd)) {
             dissCd = "1";
         }
-        if (StringUtils.isEmpty(znCd)) {
+        if (isEmpty(znCd)) {
             znCd = "11";
         }
 
         // 중복 값 체크
         int infoCnt = getDissForeCastInfoCount(dissCd, znCd);
-        log.debug("중복 체크 - infoCnt : " + infoCnt);
-
+//        log.debug("중복 체크 - infoCnt : " + infoCnt);
+//        log.debug("dissCd : " + dissCd+", znCd : "+znCd);
         // 중복 값 없으면 OPEN API 조회 후 저장
         if (infoCnt == 0) {
             String urlBuilder = "http://apis.data.go.kr/B550928/dissForecastInfoSvc/getDissForecastInfo" + "?" + URLEncoder.encode("serviceKey", "UTF-8") + "=AU%2BlOSJ7rm7d%2BJNEl42gF48f20yYevVj6mN24iNz3Or4v1FnhgO2a2DGwe96r5mEZNhTGpaoYNoboIN3P0vq7A%3D%3D" + /*Service Key*/
@@ -118,7 +122,7 @@ public class DiseaseForeCastInfoService {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-type", "application/json");
-            log.debug("Response code: " + conn.getResponseCode());
+//            log.debug("Response code: " + conn.getResponseCode());
 
             BufferedReader rd;
             if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -133,15 +137,15 @@ public class DiseaseForeCastInfoService {
             }
             rd.close();
             conn.disconnect();
-            log.debug(sb.toString());
+//            log.debug(sb.toString());
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(sb.toString());
             JSONObject jsonResponseObject = (JSONObject) jsonParser.parse(jsonObject.get("response").toString());
             JSONObject jsonBodyObject = (JSONObject) jsonParser.parse(jsonResponseObject.get("body").toString());
-            log.debug("json jsonObject : " + jsonObject.get("response"));
-            log.debug("json jsonResponseObject : " + jsonResponseObject.get("body"));
-            log.debug("json jsonBodyObject : " + jsonBodyObject.get("items"));
+//            log.debug("json jsonObject : " + jsonObject.get("response"));
+//            log.debug("json jsonResponseObject : " + jsonResponseObject.get("body"));
+//            log.debug("json jsonBodyObject : " + jsonBodyObject.get("items"));
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) jsonBodyObject.get("items");
 
@@ -155,6 +159,7 @@ public class DiseaseForeCastInfoService {
 
        // DB 조회
         diseaseForeCastInfoDto =  getDissForeCastInfoList(dissCd, znCd);
+//        log.debug("diseaseForeCastInfoDto : " + diseaseForeCastInfoDto.toString());
 
         return diseaseForeCastInfoDto;
     }

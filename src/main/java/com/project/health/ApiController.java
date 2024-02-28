@@ -27,7 +27,7 @@ public class ApiController {
      * @return String
      */
     @GetMapping("/api")
-    public String getOpenApi(Model model) {
+    public String getOpenApi(Model model) throws Exception{
 
         try {
             /*URL*/
@@ -36,8 +36,8 @@ public class ApiController {
             //
             model.addAttribute("result", itemList);
             model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCdNm));
-        } catch (Exception e) {
-            log.error("ERROR 발생!");
+        } catch (NullPointerException e) {
+            log.error("NullPointerException 발생!");
             e.printStackTrace();
         }
 
@@ -52,13 +52,13 @@ public class ApiController {
      * @return String
      */
     @PostMapping("/api")
-    public String getOpenApi (Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("dissCd") String prmDissCd){
-        log.debug("post 검색 조회 ::: "+prmZnCd);
+    public String getOpenApi (Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("dissCd") String prmDissCd) throws Exception{
+//        log.debug("post 검색 조회 ::: "+prmZnCd);
         try {
             model.addAttribute("result", diseaseForeCastInfoService.getAPIList(prmDissCd,prmZnCd));
             model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
-        } catch (Exception e) {
-            log.error("ERROR 발생!");
+        } catch (NullPointerException e) {
+            log.error("NullPointerException 발생!");
             e.printStackTrace();
         }
 

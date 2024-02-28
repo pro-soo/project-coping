@@ -1,13 +1,19 @@
 package com.project.health.dto;
 
 
-import com.project.health.entity.DiseaseCode;
-import com.project.health.entity.DiseaseForecastInfo;
-import com.project.health.entity.RiskGradeCode;
-import com.project.health.entity.RegionCode;
+import com.project.health.entity.*;
+import com.querydsl.core.Tuple;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Slf4j
@@ -22,13 +28,50 @@ public class DiseaseForeCastInfoDto {
     private String dissRiskXpln; //질병 위험도지침
     private String dissCdNm; //질병명
 
-    public DiseaseForeCastInfoDto (DiseaseForecastInfo d, RegionCode r, DiseaseCode c, RiskGradeCode g){
-        this.lowrnkZnCdNm = r.getLowrnkZnCdNm();
-        this.znCdNm = r.getZnCdNm();
-        this.dt = d.getDt();
-        this.cnt = String.valueOf(d.getCnt());
-        this.riskNm = g.getRiskNm();
-        this.dissRiskXpln = d.getDissRiskXpln();
-        this.dissCdNm = c.getDissCdNm();
+    @Builder
+    public DiseaseForeCastInfoDto(String lowrnkZnCdNm, String znCdNm, String dt, String cnt, String riskNm, String dissRiskXpln, String dissCdNm) {
+        this.lowrnkZnCdNm = lowrnkZnCdNm;
+        this.znCdNm = znCdNm;
+        this.dt = dt;
+        this.cnt = cnt;
+        this.riskNm = riskNm;
+        this.dissRiskXpln = dissRiskXpln;
+        this.dissCdNm = dissCdNm;
+    }
+
+    public static DiseaseForeCastInfoDto from(DiseaseForecastInfo d) {
+        RegionCode regionCode = d.getRegionCode();
+        RiskGradeCode riskGradeCode = d.getRiskGradeCode();
+        DiseaseCode diseaseCode = d.getDiseaseCode();
+
+        return DiseaseForeCastInfoDto.builder()
+                .lowrnkZnCdNm(regionCode.getLowrnkZnCdNm())
+                .znCdNm(regionCode.getZnCdNm())
+                .dt(d.getDt())
+                .cnt(String.valueOf(d.getCnt()))
+                .riskNm(riskGradeCode.getRiskNm())
+                .dissRiskXpln(d.getDissRiskXpln())
+                .dissCdNm(diseaseCode.getDissCdNm())
+                .build();
+    }
+
+    public static List<DiseaseForeCastInfoDto> fromList(List<Tuple> infoList){
+//        JSONParser jsonParser = new JSONParser();
+//        try {
+//            JSONObject jsonObject = (JSONObject) jsonParser.parse(infoList.toString());
+//            log.debug("fromList - jsonObject ::: "+jsonObject.toString());
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//        log.debug("fromList - infoList ::: "+infoList.toString());
+        // 새로운 리스트 생성
+        List<DiseaseForeCastInfoDto> newList = new ArrayList<>();
+        // for
+        for (Tuple tuple : infoList){
+            newList.add(DiseaseForeCastInfoDto.from(Objects.requireNonNull(tuple.get(QDiseaseForecastInfo.diseaseForecastInfo))));
+        }
+//        log.debug("fromList - newList ::: "+newList.toString());
+//        infoList.forEach(diseaseForecastInfo -> newList.add(DiseaseForeCastInfoDto.from(diseaseForecastInfo)));
+        return  newList;
     }
 }

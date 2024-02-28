@@ -22,7 +22,7 @@ public class RegionCodeService {
      * @return
      */
     public List<RegionCodeDto> getRegionCodes(String prmZnCdNm){
-        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
+//        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
         List<RegionCode> regionCodes = regionCodeRepository.findAllRegionInfo(prmZnCdNm);
         return regionCodes.stream().map(RegionCodeDto::from).collect(Collectors.toList());
     }

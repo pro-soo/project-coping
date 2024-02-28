@@ -55,7 +55,7 @@
     }
 
     for (var i = 0; i < titleList.length; i++) {
-        console.log("i >>>>>>>>>>>> " + i);
+        // console.log("i >>>>>>>>>>>> " + i);
         searchAddressAndCreateMarker(i);
     }
 </script>
@@ -78,7 +78,11 @@
             <label>
                 <select th:name="znCd">
                     <option th:value="11">서울</option>
+                    <option th:value="26">부산</option>
+                    <option th:value="27">대구</option>
+                    <option th:value="28">인천</option>
                     <option th:value="29">광주</option>
+                    <option th:value="30">대전</option>
                 </select>
             </label>
             <label>
