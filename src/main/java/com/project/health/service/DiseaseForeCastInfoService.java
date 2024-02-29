@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -49,7 +47,6 @@ public class DiseaseForeCastInfoService {
                     .id(cnt)
                     .dissCd(itemMap.get("dissCd").toString())
                     .dt(itemMap.get("dt").toString())
-                    .znCd(itemMap.get("znCd").toString())
                     .lowrnkZnCd(itemMap.get("lowrnkZnCd").toString())
                     .cnt(Integer.parseInt(itemMap.get("cnt").toString()))
                     .risk(Integer.parseInt(itemMap.get("risk").toString()))
@@ -60,7 +57,6 @@ public class DiseaseForeCastInfoService {
             diseaseForeCastInfoRepository.save(diseaseForecastInfo);
         }
     }
-
 
     /***
      * 질병예상정보 리스트 호출
@@ -73,7 +69,6 @@ public class DiseaseForeCastInfoService {
 
         Date now = new Date();
         String nowTime = sdf.format(now);
-//        log.debug("prmDissCd, prmZnCd ::: " + prmDissCd+", "+prmZnCd);
         List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmDissCd, prmZnCd, nowTime);
 //        log.debug("getDissForeCastInfoList - list >>>>>> "+list.toString());
         return DiseaseForeCastInfoDto.fromList(list);
@@ -109,7 +104,6 @@ public class DiseaseForeCastInfoService {
         // 중복 값 체크
         int infoCnt = getDissForeCastInfoCount(dissCd, znCd);
 //        log.debug("중복 체크 - infoCnt : " + infoCnt);
-//        log.debug("dissCd : " + dissCd+", znCd : "+znCd);
         // 중복 값 없으면 OPEN API 조회 후 저장
         if (infoCnt == 0) {
             String urlBuilder = "http://apis.data.go.kr/B550928/dissForecastInfoSvc/getDissForecastInfo" + "?" + URLEncoder.encode("serviceKey", "UTF-8") + "=AU%2BlOSJ7rm7d%2BJNEl42gF48f20yYevVj6mN24iNz3Or4v1FnhgO2a2DGwe96r5mEZNhTGpaoYNoboIN3P0vq7A%3D%3D" + /*Service Key*/
@@ -149,18 +143,12 @@ public class DiseaseForeCastInfoService {
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) jsonBodyObject.get("items");
 
-//            String prmZnCd = itemList.get(0).get("znCd").toString();
-//            String prmDissCd = itemList.get(0).get("dissCd").toString();
-
-
             // OPEN API 정보 저장
             saveDissForeCastInfo(itemList);
         }
 
-       // DB 조회
-        diseaseForeCastInfoDto =  getDissForeCastInfoList(dissCd, znCd);
-//        log.debug("diseaseForeCastInfoDto : " + diseaseForeCastInfoDto.toString());
-
+        // DB 조회
+        diseaseForeCastInfoDto = getDissForeCastInfoList(dissCd, znCd);
         return diseaseForeCastInfoDto;
     }
 

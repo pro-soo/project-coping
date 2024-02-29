@@ -20,7 +20,7 @@ public class RiskGradeCode {
 
 
     @Builder
-    public RiskGradeCode(int risk){
+    public RiskGradeCode(int risk) {
         this.risk = risk;
     }
 

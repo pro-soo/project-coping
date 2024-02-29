@@ -1,6 +1,6 @@
-package com.project.health.repository;
+package com.project.health.repository.impl;
 
-import com.project.health.entity.DiseaseForecastInfo;
+import com.project.health.repository.DiseaseForeCastInfoRepositoryCustom;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

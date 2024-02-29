@@ -1,9 +1,6 @@
 package com.project.health.entity;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -27,11 +24,11 @@ public class RegionCode {
     private String lowrnkZnCdNm; //시군구명
 
     @Builder
-    public RegionCode(String lowrnkZnCd){
+    public RegionCode(String lowrnkZnCd) {
         this.lowrnkZnCd = lowrnkZnCd;
     }
 
-    public RegionCode(){
+    public RegionCode() {
 
     }
 }

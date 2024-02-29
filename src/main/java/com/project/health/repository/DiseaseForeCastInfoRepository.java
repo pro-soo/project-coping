@@ -1,17 +1,13 @@
 package com.project.health.repository;
 
-import com.project.health.dto.DiseaseForeCastInfoDto;
 import com.project.health.entity.DiseaseForecastInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface DiseaseForeCastInfoRepository extends JpaRepository<DiseaseForecastInfo,String>, DiseaseForeCastInfoRepositoryCustom {
+public interface DiseaseForeCastInfoRepository extends JpaRepository<DiseaseForecastInfo, String>, DiseaseForeCastInfoRepositoryCustom {
 
+// [@Query와 JPQL 사용하기]
 //    /***
 //     *  질병예상정보 리스트 호출
 //     * @param dissCd

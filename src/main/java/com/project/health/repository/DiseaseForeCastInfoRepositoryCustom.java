@@ -1,6 +1,5 @@
 package com.project.health.repository;
 
-import com.project.health.entity.DiseaseForecastInfo;
 import com.querydsl.core.Tuple;
 import org.springframework.data.repository.query.Param;
 

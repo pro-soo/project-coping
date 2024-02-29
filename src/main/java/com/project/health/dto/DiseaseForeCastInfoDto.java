@@ -56,22 +56,13 @@ public class DiseaseForeCastInfoDto {
     }
 
     public static List<DiseaseForeCastInfoDto> fromList(List<Tuple> infoList){
-//        JSONParser jsonParser = new JSONParser();
-//        try {
-//            JSONObject jsonObject = (JSONObject) jsonParser.parse(infoList.toString());
-//            log.debug("fromList - jsonObject ::: "+jsonObject.toString());
-//        } catch (ParseException e) {
-//            throw new RuntimeException(e);
-//        }
-//        log.debug("fromList - infoList ::: "+infoList.toString());
         // 새로운 리스트 생성
         List<DiseaseForeCastInfoDto> newList = new ArrayList<>();
-        // for
+        // for문 돌려서 tuple 값 꺼내기
         for (Tuple tuple : infoList){
             newList.add(DiseaseForeCastInfoDto.from(Objects.requireNonNull(tuple.get(QDiseaseForecastInfo.diseaseForecastInfo))));
         }
 //        log.debug("fromList - newList ::: "+newList.toString());
-//        infoList.forEach(diseaseForecastInfo -> newList.add(DiseaseForeCastInfoDto.from(diseaseForecastInfo)));
         return  newList;
     }
 }
