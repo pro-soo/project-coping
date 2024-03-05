@@ -33,9 +33,8 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                 .on(diseaseForecastInfo.diseaseCode.dissCd.eq(diseaseCode.dissCd))
                 .leftJoin(diseaseForecastInfo.riskGradeCode, riskGradeCode)
                 .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
-                .where(diseaseForecastInfo.diseaseCode.dissCd.eq(dissCd)
-                        .and(diseaseForecastInfo.dt.eq(dt)
-                                .and(regionCode.znCd.eq(znCd)))).fetch();
+                .where(diseaseForecastInfo.dt.eq(dt)
+                                .and(regionCode.znCd.eq(znCd))).fetch();
     }
 
     @Override

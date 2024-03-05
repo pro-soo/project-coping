@@ -7,7 +7,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/css/jumbotron-narrow.css" rel="stylesheet">
-    <title>HealthCare - Mini Project</title>
+    <title>HealthCare - Coping</title>
     <meta charset="UTF-8">
 </head>
 <body>
@@ -66,6 +66,30 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     }
 </script>
 <div class="container text-center">
+    <!--        <p th:text="${result}"/>-->
+    <form th:action="@{/api}" method="post">
+        <label>
+            <select class="form-select" th:name="znCd">
+                <option selected th:value="11">지역 선택</option>
+                <option th:value="11">서울</option>
+                <option th:value="26">부산</option>
+                <option th:value="27">대구</option>
+                <option th:value="28">인천</option>
+                <option th:value="29">광주</option>
+                <option th:value="30">대전</option>
+            </select>
+        </label>
+        <label>
+            <select class="form-select" th:name="dissCd">
+                <option selected th:value="1">예상질병 선택</option>
+                <option th:value="1">감기</option>
+                <option th:value="2">눈병</option>
+                <option th:value="3">식중독</option>
+                <option th:value="4">피부염</option>
+            </select>
+        </label>
+        <button class="btn btn-outline-primary" type="submit">조회</button>
+    </form>
     <table class="table">
         <thead>
         <tr>
@@ -74,44 +98,20 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             <th scope="col">하위지역명</th>
             <th scope="col">질병명</th>
             <th scope="col">질병 예측위험도</th>
-            <th scope="col">질병 예측진료건수</th>
-            <th scope="col">질병 위험도 지침</th>
+<!--            <th scope="col">질병 예측진료건수</th>-->
+<!--            <th scope="col">질병 위험도 지침</th>-->
         </tr>
         </thead>
         <tbody>
-        <!--        <p th:text="${result}"/>-->
-        <form th:action="@{/api}" method="post">
-            <label>
-                <select class="form-select" th:name="znCd">
-                    <option selected th:value="11">지역 선택</option>
-                    <option th:value="11">서울</option>
-                    <option th:value="26">부산</option>
-                    <option th:value="27">대구</option>
-                    <option th:value="28">인천</option>
-                    <option th:value="29">광주</option>
-                    <option th:value="30">대전</option>
-                </select>
-            </label>
-            <label>
-                <select class="form-select" th:name="dissCd">
-                    <option selected th:value="1">예상질병 선택</option>
-                    <option th:value="1">감기</option>
-                    <option th:value="2">눈병</option>
-                    <option th:value="3">식중독</option>
-                    <option th:value="4">피부염</option>
-                </select>
-            </label>
-            <button class="btn btn-outline-primary" type="submit">조회</button>
-        </form>
         <tr th:each="diseaseInfoList : ${result}">
             <!-- 문자열을 LocalDate로 변환하고 원하는 형식으로 포맷팅 -->
             <td th:text="${#temporals.format(T(java.time.LocalDate).parse(diseaseInfoList.dt, T(java.time.format.DateTimeFormatter).ofPattern('yyyyMMdd')), 'yyyy-MM-dd')}"></td>
             <td th:text="${diseaseInfoList.znCdNm}"></td>
             <td th:text="${diseaseInfoList.lowrnkZnCdNm}"></td>
-            <td th:text="${diseaseInfoList.dissCdNm}"></td>
+            <td> <a th:text="${diseaseInfoList.dissCdNm}" href=""></a></td>
             <td th:text="${diseaseInfoList.riskNm}"></td>
-            <td th:text="${diseaseInfoList.cnt}"></td>
-            <td th:text="${diseaseInfoList.dissRiskXpln}"></td>
+<!--            <td th:text="${diseaseInfoList.cnt}"></td>-->
+<!--            <td th:text="${diseaseInfoList.dissRiskXpln}"></td>-->
         </tr>
         </tbody>
     </table>

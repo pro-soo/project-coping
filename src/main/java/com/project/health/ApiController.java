@@ -31,11 +31,8 @@ public class ApiController {
 
         try {
             /*URL*/
-            List<DiseaseForeCastInfoDto> itemList = diseaseForeCastInfoService.getAPIList("", "");
-            String prmZnCdNm = itemList.get(0).getZnCdNm();
             //
-            model.addAttribute("result", itemList);
-            model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCdNm));
+//            model.addAttribute("result", diseaseForeCastInfoService.getAPIList("", ""));
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
         }
@@ -54,8 +51,10 @@ public class ApiController {
     public String getOpenApi(Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("dissCd") String prmDissCd) throws Exception {
 //        log.debug("post 검색 조회 ::: "+prmZnCd);
         try {
-            model.addAttribute("result", diseaseForeCastInfoService.getAPIList(prmDissCd, prmZnCd));
-            model.addAttribute("region", regionCodeService.getRegionCodes(prmZnCd));
+
+            for (int i = 1; i < 5; i++) {
+                model.addAttribute("result", diseaseForeCastInfoService.getAPIList(i+"", prmZnCd));
+            }
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
         }
