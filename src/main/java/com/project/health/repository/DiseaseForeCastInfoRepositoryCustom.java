@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DiseaseForeCastInfoRepositoryCustom {
 
-    List<Tuple> searchDissInfoList(@Param("dissCd") String dissCd, @Param("znCd") String znCd, @Param("dt") String dt);
+    List<Tuple> searchDissInfoList(@Param("znCd") String znCd, @Param("lowrnkZnCd") String prmLowrnkZnCd, @Param("dt") String dt);
 
     int allCountDissInfoList();
 

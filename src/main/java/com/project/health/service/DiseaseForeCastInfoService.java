@@ -60,16 +60,16 @@ public class DiseaseForeCastInfoService {
 
     /***
      * 질병예상정보 리스트 호출
-     * @param prmDissCd
+     * @param prmLowrnkZnCd
      * @param prmZnCd
      * @return
      */
-    public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String prmDissCd, String prmZnCd) {
+    public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String prmZnCd, String prmLowrnkZnCd) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
         Date now = new Date();
         String nowTime = sdf.format(now);
-        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmDissCd, prmZnCd, nowTime);
+        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmZnCd, prmLowrnkZnCd,nowTime);
 //        log.debug("getDissForeCastInfoList - list >>>>>> "+list.toString());
         return DiseaseForeCastInfoDto.fromList(list);
     }
@@ -92,7 +92,7 @@ public class DiseaseForeCastInfoService {
      * @throws IOException
      * @throws ParseException
      */
-    public List<DiseaseForeCastInfoDto> getAPIList(String dissCd, String znCd) throws IOException, ParseException {
+    public List<DiseaseForeCastInfoDto> getAPIList(String dissCd, String znCd, String prmLowrnkZnCd) throws IOException, ParseException {
         List<DiseaseForeCastInfoDto> diseaseForeCastInfoDto = null;
         if (isEmpty(dissCd)) {
             dissCd = "1";
@@ -148,7 +148,7 @@ public class DiseaseForeCastInfoService {
         }
 
         // DB 조회
-        diseaseForeCastInfoDto = getDissForeCastInfoList(dissCd, znCd);
+        diseaseForeCastInfoDto = getDissForeCastInfoList(znCd, prmLowrnkZnCd);
         return diseaseForeCastInfoDto;
     }
 

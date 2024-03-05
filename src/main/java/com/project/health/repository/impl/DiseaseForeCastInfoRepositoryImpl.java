@@ -22,7 +22,7 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Tuple> searchDissInfoList(String dissCd, String znCd, String dt) {
+    public List<Tuple> searchDissInfoList(String znCd, String lowrnkZnCd,String dt) {
 //        log.debug("searchDissInfoList :: "+dissCd);
         return queryFactory
                 .select(diseaseForecastInfo, regionCode, diseaseCode, riskGradeCode)
@@ -34,7 +34,8 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                 .leftJoin(diseaseForecastInfo.riskGradeCode, riskGradeCode)
                 .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
                 .where(diseaseForecastInfo.dt.eq(dt)
-                                .and(regionCode.znCd.eq(znCd))).fetch();
+                                .and(regionCode.lowrnkZnCd.eq(lowrnkZnCd))
+                        .and(regionCode.znCd.eq(znCd))).fetch();
     }
 
     @Override
