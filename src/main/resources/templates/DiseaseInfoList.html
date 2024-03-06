@@ -6,7 +6,6 @@
 ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <!-- Custom styles for this template -->
-<!--    <link href="/css/jumbotron-narrow.css" rel="stylesheet">-->
     <link href="/css/kakao-map.css" rel="stylesheet">
     <title>HealthCare - Coping</title>
     <meta charset="UTF-8">
@@ -259,12 +258,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <label>
             <select class="form-select" th:name="znCd">
                 <option selected th:value="11">지역 선택</option>
-                <option th:value="11">서울</option>
-                <option th:value="26">부산</option>
-                <option th:value="27">대구</option>
-                <option th:value="28">인천</option>
-                <option th:value="29">광주</option>
-                <option th:value="30">대전</option>
+                <option th:each="regionList : ${region}" th:value="${regionList.znCd}" th:text="${regionList.znCdNm}"></option>
             </select>
         </label>
         <label>
@@ -287,8 +281,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             <th scope="col">하위지역명</th>
             <th scope="col">질병명</th>
             <th scope="col">질병 예측위험도</th>
-<!--            <th scope="col">질병 예측진료건수</th>-->
-<!--                        <th scope="col">질병 위험도 지침</th>-->
         </tr>
         </thead>
         <tbody>
@@ -300,8 +292,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             <td><a th:text="${diseaseInfoList.dissCdNm}" href=""></a></td>
             <td th:text="${diseaseInfoList.riskNm}"></td>
             <p th:text="${diseaseInfoList.dissRiskXpln}"></p>
-            <!--            <td th:text="${diseaseInfoList.cnt}"></td>-->
-            <!--            <td th:text="${diseaseInfoList.dissRiskXpln}"></td>-->
         </tr>
         </tbody>
     </table>

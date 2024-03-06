@@ -1,10 +1,15 @@
 package com.project.health.dto;
 
+import com.project.health.entity.QRegionCode;
 import com.project.health.entity.RegionCode;
+import com.querydsl.core.Tuple;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -27,5 +32,20 @@ public class RegionCodeDto {
                 .build();
     }
 
-
+    public static List<RegionCodeDto> fromZnCdList(List<Tuple> regionList) {
+        // 새로운 리스트 생성
+        List<RegionCodeDto> newList = new ArrayList<>();
+//        log.debug("fromList - regionList ::: "+regionList.toString());
+        // for문 돌려서 tuple 값 꺼내기
+        for (Tuple tuple : regionList) {
+            newList.add(RegionCodeDto.builder()
+                    .znCd(tuple.get(QRegionCode.regionCode.znCd))
+                    .znCdNm(tuple.get(QRegionCode.regionCode.znCdNm))
+                    .lowrnkZnCd("")
+                    .lowrnkZnCdNm("")
+                    .build());
+        }
+//        log.debug("fromList - newList ::: "+newList.toString());
+        return newList;
+    }
 }
