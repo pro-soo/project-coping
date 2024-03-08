@@ -69,7 +69,23 @@ public class DiseaseForeCastInfoService {
 
         Date now = new Date();
         String nowTime = sdf.format(now);
-        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmZnCd, prmLowrnkZnCd,nowTime);
+        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmZnCd, prmLowrnkZnCd, nowTime);
+//        log.debug("getDissForeCastInfoList - list >>>>>> "+list.toString());
+        return DiseaseForeCastInfoDto.fromList(list);
+    }
+
+    /***
+     * 카카오맵 표시를 위한 질병예상정보 리스트 조회
+     * @param prmZnCdNm
+     * @param prmLowrnkZnCdNm
+     * @return
+     */
+    public List<DiseaseForeCastInfoDto> getDissForeCastInfoListKaKaoMap(String prmZnCdNm, String prmLowrnkZnCdNm) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        Date now = new Date();
+        String nowTime = sdf.format(now);
+        List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoListKaKaoMap(prmZnCdNm, prmLowrnkZnCdNm, nowTime);
 //        log.debug("getDissForeCastInfoList - list >>>>>> "+list.toString());
         return DiseaseForeCastInfoDto.fromList(list);
     }

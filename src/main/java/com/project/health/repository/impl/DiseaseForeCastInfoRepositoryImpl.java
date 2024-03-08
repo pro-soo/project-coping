@@ -22,7 +22,7 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Tuple> searchDissInfoList(String znCd, String lowrnkZnCd,String dt) {
+    public List<Tuple> searchDissInfoList(String znCd, String lowrnkZnCd, String dt) {
 //        log.debug("searchDissInfoList :: "+dissCd);
         return queryFactory
                 .select(diseaseForecastInfo, regionCode, diseaseCode, riskGradeCode)
@@ -34,8 +34,24 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                 .leftJoin(diseaseForecastInfo.riskGradeCode, riskGradeCode)
                 .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
                 .where(diseaseForecastInfo.dt.eq(dt)
-                                .and(regionCode.lowrnkZnCd.eq(lowrnkZnCd))
+                        .and(regionCode.lowrnkZnCd.eq(lowrnkZnCd))
                         .and(regionCode.znCd.eq(znCd))).fetch();
+    }
+
+    @Override
+    public List<Tuple> searchDissInfoListKaKaoMap(String znCdNm, String prmLowrnkZnCdNm, String dt) {
+        return queryFactory
+                .select(diseaseForecastInfo, regionCode, diseaseCode, riskGradeCode)
+                .from(diseaseForecastInfo)
+                .leftJoin(diseaseForecastInfo.regionCode, regionCode)
+                .on(diseaseForecastInfo.regionCode.lowrnkZnCd.eq(regionCode.lowrnkZnCd))
+                .leftJoin(diseaseForecastInfo.diseaseCode, diseaseCode)
+                .on(diseaseForecastInfo.diseaseCode.dissCd.eq(diseaseCode.dissCd))
+                .leftJoin(diseaseForecastInfo.riskGradeCode, riskGradeCode)
+                .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
+                .where(diseaseForecastInfo.dt.eq(dt)
+                        .and(regionCode.lowrnkZnCdNm.eq(prmLowrnkZnCdNm))
+                        .and(regionCode.znCdNm.eq(znCdNm))).fetch();
     }
 
     @Override

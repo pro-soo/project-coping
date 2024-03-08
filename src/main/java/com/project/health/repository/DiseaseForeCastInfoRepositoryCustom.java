@@ -9,6 +9,8 @@ public interface DiseaseForeCastInfoRepositoryCustom {
 
     List<Tuple> searchDissInfoList(@Param("znCd") String znCd, @Param("lowrnkZnCd") String prmLowrnkZnCd, @Param("dt") String dt);
 
+    List<Tuple> searchDissInfoListKaKaoMap(@Param("znCdNm") String znCdNm, @Param("lowrnkZnCdNm") String prmLowrnkZnCdNm, @Param("dt") String dt);
+
     int allCountDissInfoList();
 
     int duplCountDissInfo(@Param("dissCd") String dissCd, @Param("znCd") String znCd);
