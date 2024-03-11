@@ -1,16 +1,14 @@
 package com.project.health;
 
 import com.project.health.dto.DiseaseForeCastInfoDto;
+import com.project.health.dto.RegionCodeDto;
 import com.project.health.service.DiseaseForeCastInfoService;
 import com.project.health.service.RegionCodeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -63,6 +61,7 @@ public class ApiController {
             model.addAttribute("region", regionCodeService.getRegionCodes());
             // 조회 결과 가져오기
             model.addAttribute("result", foreCastInfoDtoList);
+            log.debug("foreCastInfoDtoList :: "+foreCastInfoDtoList.toString());
             // 지역명으로 키워드 적용
             model.addAttribute("keyword", keyWord);
         } catch (NullPointerException e) {
@@ -126,5 +125,15 @@ public class ApiController {
         return prmznCdNm + " " + prmlowrnkZnCdNm + " " + organization;
     }
 
-
+    /***
+     * AJAX 호출 시 하위지역명 가져오기
+     * @param prmZnCd
+     * @return String
+     */
+    @PostMapping("/api/ajax")
+    @ResponseBody
+    public List<RegionCodeDto> getAjax(@RequestParam("znCd") String prmZnCd) throws Exception {
+//        log.debug("getAjax ::: "+prmZnCd);
+        return regionCodeService.getLowRegionCodes(prmZnCd);
+    }
 }

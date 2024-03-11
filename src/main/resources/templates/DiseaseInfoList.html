@@ -27,10 +27,11 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 </div>
 <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=326a73fe3d4e94b0132a2dc8188b7352&libraries=services,clusterer,drawing"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script th:inline="javascript">
     // 마커를 담을 배열입니다
-    var foreCastInfo = [[${result}]];
-    console.log(foreCastInfo);
+    // var foreCastInfo = [[${result}]];
+    // console.log(foreCastInfo);
 
     var markers = [];
 
@@ -247,30 +248,84 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             el.removeChild(el.lastChild);
         }
     }
+
+    function getLowrnkZnCd() {
+        let selDept = document.querySelector("#selZnCd");
+        let selDeptValue = selDept.options[selDept.selectedIndex].value;
+
+        // console.log("selDeptValue :: "+selDeptValue)
+
+        $.ajax({
+            type : "post",
+            url : "/api/ajax",
+            dataType : "json",
+            data : { "znCd" : selDeptValue },
+            success : function(res) {
+                let output = "<option value=0>-- 하위지역 선택 --</option>";
+                res.forEach( (r) => {
+                    output += `<option value=${r.lowrnkZnCd}>${r.lowrnkZnCdNm}</option>`;
+                });
+                $("#selLowrnkZnCd").html(output);
+                // console.log(res);
+            },
+            error : function(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    function sendForm(){
+        const form = document.querySelector("#form");
+
+        let selDept = document.querySelector("#selZnCd");
+        let selDeptValue = selDept.options[selDept.selectedIndex].value;
+        let selLowrnkZnCd = document.querySelector("#selLowrnkZnCd");
+        let selLowrnkZnCdValue = selLowrnkZnCd.options[selLowrnkZnCd.selectedIndex].value;
+
+        var valChk = true;
+
+        // console.log("selDeptValue "+selDeptValue+", selLowrnkZnCdValue "+selLowrnkZnCdValue);
+
+        if (selDeptValue === '0'){
+            alert("지역명을 선택해주세요.");
+            valChk = false;
+            return valChk;
+        }
+        if (selLowrnkZnCdValue === '0'){
+            alert("하위지역명을 선택해주세요.");
+            valChk = false;
+            return valChk;
+        }
+
+        if (valChk === false){
+            form.addEventListener("submit", (event) => {
+                // 동작(이벤트)을 실행하지 못하게 막는 메서드입니다.
+                event.preventDefault();
+            });
+        }else{
+            form.submit();
+        }
+    }
 </script>
+
 
 <!-- 예측정보 리스트 -->
 <div class="container text-center">
     <!--        <p th:text="${result}"/>-->
-    <form th:action="@{/api}" method="post">
+    <form th:action="@{/api}" method="post" id="form">
         <label>
-            <select class="form-select" th:name="znCd">
-                <option selected th:value="11">지역 선택</option>
+            <select class="form-select" th:name="znCd" id="selZnCd" th:onchange="getLowrnkZnCd()">
+                <option selected th:value="0">-- 지역 선택 --</option>
                 <option th:each="regionList : ${region}" th:value="${regionList.znCd}"
                         th:text="${regionList.znCdNm}"></option>
             </select>
         </label>
         <label>
-            <select class="form-select" th:name="lowrnkZnCd">
-                <option selected th:value="29110">하위지역 선택</option>
-                <option th:value="29110">동구</option>
-                <option th:value="29140">서구</option>
-                <option th:value="29155">남구</option>
-                <option th:value="29170">북구</option>
-                <option th:value="29200">광산구</option>
+            <select class="form-select" th:name="lowrnkZnCd" id="selLowrnkZnCd">
+                <option th:value="0">-- 하위지역 선택 --</option>
             </select>
         </label>
-        <button class="btn btn-outline-primary" type="submit">조회</button>
+        <button class="btn btn-outline-primary" type="button" th:onclick="sendForm()">조회</button>
     </form>
     <table class="table">
         <thead>

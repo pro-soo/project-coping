@@ -19,8 +19,8 @@ public class RegionCodeRepositoryImpl implements RegionCodeRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<RegionCode> findAllRegionInfo(String znCdNm) {
-        return queryFactory.selectFrom(QRegionCode.regionCode).where(QRegionCode.regionCode.znCdNm.eq(znCdNm)).orderBy(QRegionCode.regionCode.lowrnkZnCd.desc()).fetch();
+    public List<RegionCode> findLowRegionInfo(String znCd) {
+        return queryFactory.selectFrom(QRegionCode.regionCode).where(QRegionCode.regionCode.znCd.eq(znCd)).fetch();
     }
 
     @Override

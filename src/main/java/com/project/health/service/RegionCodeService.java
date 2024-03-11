@@ -18,13 +18,13 @@ public class RegionCodeService {
     private final RegionCodeRepository regionCodeRepository;
 
     /***
-     * 카카오 맵 api에 사용될 지역정보 조회
-     * @param prmZnCdNm
+     * ajax 통한 하위지역정보 조회
+     * @param prmZnCd
      * @return
      */
-    public List<RegionCodeDto> getRegionCodes(String prmZnCdNm) {
+    public List<RegionCodeDto> getLowRegionCodes(String prmZnCd) {
 //        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
-        List<RegionCode> regionCodes = regionCodeRepository.findAllRegionInfo(prmZnCdNm);
+        List<RegionCode> regionCodes = regionCodeRepository.findLowRegionInfo(prmZnCd);
         return regionCodes.stream().map(RegionCodeDto::from).collect(Collectors.toList());
     }
 
@@ -37,4 +37,6 @@ public class RegionCodeService {
         List<Tuple> regionCodes = regionCodeRepository.findAllRegionInfo();
         return RegionCodeDto.fromZnCdList(regionCodes);
     }
+
+
 }
