@@ -37,3 +37,31 @@ logging:
     com.project.health: debug
 
 ---
+server:
+  port: 8090  # Spring boot Server port
+spring:
+  config:
+    activate:
+      on-profile: local_mysql
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coping?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: qwer!@#$
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+      defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+  sql:
+    init:
+      mode: always
+logging:
+  level:
+    org.hibernate.SQL: debug
