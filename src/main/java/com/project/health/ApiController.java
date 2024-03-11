@@ -114,7 +114,7 @@ public class ApiController {
                 organization = "이비인후과";
                 break;
             case "눈병":
-                organization = "내과";
+                organization = "안과";
                 break;
             case "식중독":
                 organization = "내과";
