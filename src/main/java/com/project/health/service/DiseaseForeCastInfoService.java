@@ -42,7 +42,13 @@ public class DiseaseForeCastInfoService {
 //        log.debug("saveDissForeCastInfo cnt : " + cnt);
         if (cnt == 0) cnt = 1;
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        Date now = new Date();
+        String nowTime = sdf.format(now);
+
         for (Map<String, Object> itemMap : itemList) {
+            if (itemMap.get("dt").toString().equals(nowTime)){
             DiseaseForecastInfo diseaseForecastInfo = DiseaseForecastInfo.builder()
                     .id(cnt)
                     .dissCd(itemMap.get("dissCd").toString())
@@ -53,8 +59,9 @@ public class DiseaseForeCastInfoService {
                     .dissRiskXpln(itemMap.get("dissRiskXpln").toString()).build();
 
             cnt++;
-//            log.debug("diseaseForecastInfo :::::::: " + diseaseForecastInfo.toString());
+            log.debug("diseaseForecastInfo :::::::: " + diseaseForecastInfo.toString());
             diseaseForeCastInfoRepository.save(diseaseForecastInfo);
+            }
         }
     }
 
@@ -110,16 +117,10 @@ public class DiseaseForeCastInfoService {
      */
     public List<DiseaseForeCastInfoDto> getAPIList(String dissCd, String znCd, String prmLowrnkZnCd) throws IOException, ParseException {
         List<DiseaseForeCastInfoDto> diseaseForeCastInfoDto = null;
-        if (isEmpty(dissCd)) {
-            dissCd = "1";
-        }
-        if (isEmpty(znCd)) {
-            znCd = "11";
-        }
 
         // 중복 값 체크
         int infoCnt = getDissForeCastInfoCount(dissCd, znCd);
-//        log.debug("중복 체크 - infoCnt : " + infoCnt);
+        log.debug("중복 체크 - infoCnt : " + infoCnt);
         // 중복 값 없으면 OPEN API 조회 후 저장
         if (infoCnt == 0) {
             String urlBuilder = "http://apis.data.go.kr/B550928/dissForecastInfoSvc/getDissForecastInfo" + "?" + URLEncoder.encode("serviceKey", "UTF-8") + "=AU%2BlOSJ7rm7d%2BJNEl42gF48f20yYevVj6mN24iNz3Or4v1FnhgO2a2DGwe96r5mEZNhTGpaoYNoboIN3P0vq7A%3D%3D" + /*Service Key*/
@@ -155,7 +156,7 @@ public class DiseaseForeCastInfoService {
             JSONObject jsonBodyObject = (JSONObject) jsonParser.parse(jsonResponseObject.get("body").toString());
 //            log.debug("json jsonObject : " + jsonObject.get("response"));
 //            log.debug("json jsonResponseObject : " + jsonResponseObject.get("body"));
-//            log.debug("json jsonBodyObject : " + jsonBodyObject.get("items"));
+            log.debug("json jsonBodyObject : " + jsonBodyObject.get("items"));
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) jsonBodyObject.get("items");
 

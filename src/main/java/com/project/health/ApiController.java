@@ -48,7 +48,7 @@ public class ApiController {
      */
     @PostMapping("/api")
     public String getOpenApi(Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("lowrnkZnCd") String prmLowrnkZnCd) throws Exception {
-//        log.debug("post 검색 조회 ::: "+prmZnCd);
+        log.debug("post 검색 조회 ::: "+prmZnCd+", "+prmLowrnkZnCd);
         try {
             List<DiseaseForeCastInfoDto> foreCastInfoDtoList = null;
             for (int i = 1; i < 5; i++) {
