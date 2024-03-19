@@ -38,6 +38,9 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23' // 추가
+	runtimeOnly 'org.postgresql:postgresql' // 추가
 }
 
 tasks.named('test') {

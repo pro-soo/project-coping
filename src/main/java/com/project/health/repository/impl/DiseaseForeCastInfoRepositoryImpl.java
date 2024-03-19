@@ -35,7 +35,7 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                 .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
                 .where(diseaseForecastInfo.dt.eq(dt)
                         .and(regionCode.lowrnkZnCd.eq(lowrnkZnCd))
-                        .and(regionCode.znCd.eq(znCd))).fetch();
+                        .and(regionCode.znCd.eq(znCd))).orderBy(diseaseForecastInfo.diseaseCode.dissCd.asc()).fetch();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                 .on(diseaseForecastInfo.riskGradeCode.risk.eq(riskGradeCode.risk))
                 .where(diseaseForecastInfo.dt.eq(dt)
                         .and(regionCode.lowrnkZnCdNm.eq(prmLowrnkZnCdNm))
-                        .and(regionCode.znCdNm.eq(znCdNm))).fetch();
+                        .and(regionCode.znCdNm.eq(znCdNm))).orderBy(diseaseForecastInfo.diseaseCode.dissCd.asc()).fetch();
     }
 
     @Override
