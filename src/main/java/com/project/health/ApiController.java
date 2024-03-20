@@ -92,6 +92,7 @@ public class ApiController {
             model.addAttribute("region", regionCodeService.getRegionCodes());
             model.addAttribute("result", foreCastInfoDtoList);
             model.addAttribute("keyword", keyWord);
+            model.addAttribute("mapYn", 1);
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
         }
