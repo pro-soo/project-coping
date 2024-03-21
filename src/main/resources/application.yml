@@ -79,7 +79,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/coping
+    url: jdbc:postgresql://192.168.1.57:5432/coping
     username: postgres
     password: postgres
   # jpa properties
