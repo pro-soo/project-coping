@@ -20,11 +20,14 @@ public class RegionCodeRepositoryImpl implements RegionCodeRepositoryCustom {
 
     @Override
     public List<RegionCode> findLowRegionInfo(String znCd) {
-        return queryFactory.selectFrom(QRegionCode.regionCode).where(QRegionCode.regionCode.znCd.eq(znCd)).fetch();
+        return queryFactory.selectFrom(QRegionCode.regionCode)
+                .where(QRegionCode.regionCode.znCd.eq(znCd)).fetch();
     }
 
     @Override
     public List<Tuple> findAllRegionInfo() {
-        return queryFactory.selectDistinct(QRegionCode.regionCode.znCd, QRegionCode.regionCode.znCdNm).from(QRegionCode.regionCode).orderBy(QRegionCode.regionCode.znCd.asc()).fetch();
+        return queryFactory.selectDistinct(QRegionCode.regionCode.znCd, QRegionCode.regionCode.znCdNm)
+                .from(QRegionCode.regionCode)
+                .orderBy(QRegionCode.regionCode.znCd.asc()).fetch();
     }
 }

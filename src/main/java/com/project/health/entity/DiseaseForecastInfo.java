@@ -2,6 +2,7 @@ package com.project.health.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "DISEASE_FORCAST_INFO")
 @Getter
 @ToString
+@NoArgsConstructor
 public class DiseaseForecastInfo {
 
     @Id
@@ -33,7 +35,6 @@ public class DiseaseForecastInfo {
 
     @Builder
     public DiseaseForecastInfo(int id, String dissCd, String dt, String lowrnkZnCd, int cnt, int risk, String dissRiskXpln) {
-
         this.id = id;
         this.diseaseCode = DiseaseCode.builder().dissCd(dissCd).build();
         this.dt = dt;
@@ -42,9 +43,4 @@ public class DiseaseForecastInfo {
         this.riskGradeCode = RiskGradeCode.builder().risk(risk).build();
         this.dissRiskXpln = dissRiskXpln;
     }
-
-    public DiseaseForecastInfo() {
-
-    }
-
 }

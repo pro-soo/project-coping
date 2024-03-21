@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("RegionCode")
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class RegionCodeService {
@@ -23,8 +23,8 @@ public class RegionCodeService {
      * @return
      */
     public List<RegionCodeDto> getLowRegionCodes(String prmZnCd) {
-//        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
         List<RegionCode> regionCodes = regionCodeRepository.findLowRegionInfo(prmZnCd);
+
         return regionCodes.stream().map(RegionCodeDto::from).collect(Collectors.toList());
     }
 
@@ -33,8 +33,8 @@ public class RegionCodeService {
      * @return
      */
     public List<RegionCodeDto> getRegionCodes() {
-//        log.debug("getRegionCodes prmZnCdNm "+prmZnCdNm);
         List<Tuple> regionCodes = regionCodeRepository.findAllRegionInfo();
+
         return RegionCodeDto.fromZnCdList(regionCodes);
     }
 

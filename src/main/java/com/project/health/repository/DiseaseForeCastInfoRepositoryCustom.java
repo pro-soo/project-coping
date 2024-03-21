@@ -13,5 +13,5 @@ public interface DiseaseForeCastInfoRepositoryCustom {
 
     int allCountDissInfoList();
 
-    int duplCountDissInfo(@Param("dissCd") String dissCd, @Param("znCd") String znCd);
+    int duplCountDissInfo(@Param("dissCd") String dissCd, @Param("znCd") String znCd, @Param("dt") String dt);
 }

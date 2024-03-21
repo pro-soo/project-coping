@@ -26,16 +26,14 @@ public class ApiController {
      * @return String
      */
     @GetMapping("/api")
-    public String getOpenApi(Model model) throws Exception {
-
+    public String getOpenApi(Model model) {
         try {
-            // 지역명, 지역코드 가져와기
             model.addAttribute("region", regionCodeService.getRegionCodes());
-            // 키워드 default 값 설정
             model.addAttribute("keyword", "서울");
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
         }
+
         return "DiseaseInfoList";
     }
 
@@ -48,21 +46,15 @@ public class ApiController {
      */
     @PostMapping("/api")
     public String getOpenApi(Model model, @RequestParam("znCd") String prmZnCd, @RequestParam("lowrnkZnCd") String prmLowrnkZnCd) throws Exception {
-        log.debug("post 검색 조회 ::: "+prmZnCd+", "+prmLowrnkZnCd);
         try {
             List<DiseaseForeCastInfoDto> foreCastInfoDtoList = null;
             for (int i = 1; i < 5; i++) {
-                // api 호출, 저장 또는 조회
                 foreCastInfoDtoList = diseaseForeCastInfoService.getAPIList(i + "", prmZnCd, prmLowrnkZnCd);
             }
             String keyWord = foreCastInfoDtoList.get(0).getZnCdNm() + " " + foreCastInfoDtoList.get(0).getLowrnkZnCdNm();
 
-            // 셀렉트박스 지역코드, 지역명 가져오기
             model.addAttribute("region", regionCodeService.getRegionCodes());
-            // 조회 결과 가져오기
             model.addAttribute("result", foreCastInfoDtoList);
-            log.debug("foreCastInfoDtoList :: "+foreCastInfoDtoList.toString());
-            // 지역명으로 키워드 적용
             model.addAttribute("keyword", keyWord);
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
@@ -77,18 +69,12 @@ public class ApiController {
      * @return String
      */
     @GetMapping("/map/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}")
-    public String getOpenApiMap(Model model, @PathVariable("dissCdNm") String prmdissCdNm, @PathVariable("znCdNm") String prmznCdNm, @PathVariable("lowrnkZnCdNm") String prmlowrnkZnCdNm) throws Exception {
-//        log.debug("prmdissCdNm :: " + prmdissCdNm);
-//        log.debug("prmznCdNm :: " + prmznCdNm);
-//        log.debug("prmlowrnkZnCdNm :: " + prmlowrnkZnCdNm);
+    public String getOpenApiMap(Model model, @PathVariable("dissCdNm") String prmdissCdNm, @PathVariable("znCdNm") String prmznCdNm, @PathVariable("lowrnkZnCdNm") String prmlowrnkZnCdNm) {
         try {
-            // 지역명, 하위지역명 적용한 조회 결과 가져오기
             List<DiseaseForeCastInfoDto> foreCastInfoDtoList = diseaseForeCastInfoService.getDissForeCastInfoListKaKaoMap(prmznCdNm, prmlowrnkZnCdNm);
 
-            // 질병명에 해당하는 병원 적용
             String keyWord = getKakaoMapKeyword(prmdissCdNm, prmznCdNm, prmlowrnkZnCdNm);
 
-            // 셀렉트박스 지역코드, 지역명 가져오기
             model.addAttribute("region", regionCodeService.getRegionCodes());
             model.addAttribute("result", foreCastInfoDtoList);
             model.addAttribute("keyword", keyWord);
@@ -133,8 +119,7 @@ public class ApiController {
      */
     @PostMapping("/api/ajax")
     @ResponseBody
-    public List<RegionCodeDto> getAjax(@RequestParam("znCd") String prmZnCd) throws Exception {
-//        log.debug("getAjax ::: "+prmZnCd);
+    public List<RegionCodeDto> getAjax(@RequestParam("znCd") String prmZnCd) {
         return regionCodeService.getLowRegionCodes(prmZnCd);
     }
 }

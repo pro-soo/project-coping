@@ -23,7 +23,7 @@ public class RegionCodeDto {
 
     public static RegionCodeDto from(RegionCode regionCode) {
         if (regionCode == null) return null;
-//        log.debug("RegionCodeDto");
+
         return RegionCodeDto.builder()
                 .znCd(regionCode.getZnCd())
                 .znCdNm(regionCode.getZnCdNm())
@@ -33,10 +33,8 @@ public class RegionCodeDto {
     }
 
     public static List<RegionCodeDto> fromZnCdList(List<Tuple> regionList) {
-        // 새로운 리스트 생성
         List<RegionCodeDto> newList = new ArrayList<>();
-//        log.debug("fromList - regionList ::: "+regionList.toString());
-        // for문 돌려서 tuple 값 꺼내기
+
         for (Tuple tuple : regionList) {
             newList.add(RegionCodeDto.builder()
                     .znCd(tuple.get(QRegionCode.regionCode.znCd))
@@ -45,7 +43,7 @@ public class RegionCodeDto {
                     .lowrnkZnCdNm("")
                     .build());
         }
-//        log.debug("fromList - newList ::: "+newList.toString());
+
         return newList;
     }
 }

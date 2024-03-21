@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +53,12 @@ public class DiseaseForeCastInfoDto {
     }
 
     public static List<DiseaseForeCastInfoDto> fromList(List<Tuple> infoList){
-        // 새로운 리스트 생성
         List<DiseaseForeCastInfoDto> newList = new ArrayList<>();
-        // for문 돌려서 tuple 값 꺼내기
+
         for (Tuple tuple : infoList){
             newList.add(DiseaseForeCastInfoDto.from(Objects.requireNonNull(tuple.get(QDiseaseForecastInfo.diseaseForecastInfo))));
         }
-//        log.debug("fromList - newList ::: "+newList.toString());
+
         return  newList;
     }
 }

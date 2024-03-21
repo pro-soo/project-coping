@@ -23,7 +23,6 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
 
     @Override
     public List<Tuple> searchDissInfoList(String znCd, String lowrnkZnCd, String dt) {
-//        log.debug("searchDissInfoList :: "+dissCd);
         return queryFactory
                 .select(diseaseForecastInfo, regionCode, diseaseCode, riskGradeCode)
                 .from(diseaseForecastInfo)
@@ -63,12 +62,13 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
     }
 
     @Override
-    public int duplCountDissInfo(String dissCd, String znCd) {
+    public int duplCountDissInfo(String dissCd, String znCd, String dt) {
         return queryFactory
                 .select(diseaseForecastInfo)
                 .from(diseaseForecastInfo)
-                .where(diseaseForecastInfo.diseaseCode.dissCd.eq(dissCd)
-                        .and(diseaseForecastInfo.regionCode.znCd.eq(znCd)))
+                .where(diseaseForecastInfo.dt.eq(dt)
+                        .and(diseaseForecastInfo.diseaseCode.dissCd.eq(dissCd)
+                                .and(diseaseForecastInfo.regionCode.znCd.eq(znCd))))
                 .fetch().size();
     }
 }
