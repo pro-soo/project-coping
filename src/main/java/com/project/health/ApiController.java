@@ -68,7 +68,7 @@ public class ApiController {
      * @param model
      * @return String
      */
-    @GetMapping("/map/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}")
+    @GetMapping("/api/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}")
     public String getOpenApiMap(Model model, @PathVariable("dissCdNm") String prmdissCdNm, @PathVariable("znCdNm") String prmznCdNm, @PathVariable("lowrnkZnCdNm") String prmlowrnkZnCdNm) {
         try {
             List<DiseaseForeCastInfoDto> foreCastInfoDtoList = diseaseForeCastInfoService.getDissForeCastInfoListKaKaoMap(prmznCdNm, prmlowrnkZnCdNm);

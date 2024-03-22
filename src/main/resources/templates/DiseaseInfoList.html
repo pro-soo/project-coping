@@ -93,7 +93,7 @@
 
                             <div class="d-flex align-items-stretch" th:each="diseaseInfoList : ${result}">
                                 <div class="icon-box mt-4 mt-xl-0"
-                                     th:onclick="|location.href='@{/map/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}(dissCdNm=${diseaseInfoList.dissCdNm},znCdNm=${diseaseInfoList.znCdNm}, lowrnkZnCdNm=${diseaseInfoList.lowrnkZnCdNm})}'|">
+                                     th:onclick="|location.href='@{/api/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}(dissCdNm=${diseaseInfoList.dissCdNm},znCdNm=${diseaseInfoList.znCdNm}, lowrnkZnCdNm=${diseaseInfoList.lowrnkZnCdNm})}'|">
                                     <i class="bx bx-receipt"></i>
                                     <h4 th:text="${diseaseInfoList.dissCdNm}"></h4>
                                     <th:block th:switch="${diseaseInfoList.riskNm}">
