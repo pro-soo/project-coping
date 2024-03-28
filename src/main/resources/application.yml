@@ -82,6 +82,24 @@ spring:
     url: jdbc:postgresql://192.168.1.57:5432/coping
     username: postgres
     password: postgres
+
+---
+server:
+  port: 8090
+
+spring:
+  config:
+    activate:
+      on-profile: ncp_postgre
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://pg-2k6mt.vpc-pub-cdb-kr.gov-ntruss.com:5432/coping
+    username: iteyes02
+    password: iteyes12#$
+    hikari:
+      schema: coping
+
   # jpa properties
   jpa:
     hibernate:
