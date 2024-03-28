@@ -71,4 +71,15 @@ public class DiseaseForeCastInfoRepositoryImpl implements DiseaseForeCastInfoRep
                                 .and(diseaseForecastInfo.regionCode.znCd.eq(znCd))))
                 .fetch().size();
     }
+
+    @Override
+    public int duplCountLowrnkZnCdInfo(String dissCd, String prmLowrnkZnCd, String dt) {
+        return queryFactory
+                .select(diseaseForecastInfo)
+                .from(diseaseForecastInfo)
+                .where(diseaseForecastInfo.dt.eq(dt)
+                        .and(diseaseForecastInfo.diseaseCode.dissCd.eq(dissCd)
+                                .and(diseaseForecastInfo.regionCode.lowrnkZnCd.eq(prmLowrnkZnCd))))
+                .fetch().size();
+    }
 }

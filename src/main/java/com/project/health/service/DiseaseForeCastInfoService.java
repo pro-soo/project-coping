@@ -38,17 +38,20 @@ public class DiseaseForeCastInfoService {
         if (cnt == 0) cnt = 1;
 
         for (Map<String, Object> itemMap : itemList) {
-            if (itemMap.get("dt").toString().equals(getNowTime())){
-            DiseaseForecastInfo diseaseForecastInfo = DiseaseForecastInfo.builder()
-                    .id(cnt)
-                    .dissCd(itemMap.get("dissCd").toString())
-                    .dt(itemMap.get("dt").toString())
-                    .lowrnkZnCd(itemMap.get("lowrnkZnCd").toString())
-                    .cnt(Integer.parseInt(itemMap.get("cnt").toString()))
-                    .risk(Integer.parseInt(itemMap.get("risk").toString()))
-                    .dissRiskXpln(itemMap.get("dissRiskXpln").toString()).build();
-            cnt++;
-            diseaseForeCastInfoRepository.save(diseaseForecastInfo);
+            int lowrnkZnCdCnt = diseaseForeCastInfoRepository.duplCountLowrnkZnCdInfo(itemMap.get("dissCd").toString(), itemMap.get("lowrnkZnCd").toString(), itemMap.get("dt").toString());
+            if (lowrnkZnCdCnt == 0) {
+                if (itemMap.get("dt").toString().equals(getNowTime())) {
+                    DiseaseForecastInfo diseaseForecastInfo = DiseaseForecastInfo.builder()
+                            .id(cnt)
+                            .dissCd(itemMap.get("dissCd").toString())
+                            .dt(itemMap.get("dt").toString())
+                            .lowrnkZnCd(itemMap.get("lowrnkZnCd").toString())
+                            .cnt(Integer.parseInt(itemMap.get("cnt").toString()))
+                            .risk(Integer.parseInt(itemMap.get("risk").toString()))
+                            .dissRiskXpln(itemMap.get("dissRiskXpln").toString()).build();
+                    cnt++;
+                    diseaseForeCastInfoRepository.save(diseaseForecastInfo);
+                }
             }
         }
     }
@@ -72,7 +75,7 @@ public class DiseaseForeCastInfoService {
      */
     public List<DiseaseForeCastInfoDto> getDissForeCastInfoList(String prmZnCd, String prmLowrnkZnCd) {
         List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoList(prmZnCd, prmLowrnkZnCd, getNowTime());
-        
+
         return DiseaseForeCastInfoDto.fromList(list);
     }
 
@@ -84,7 +87,7 @@ public class DiseaseForeCastInfoService {
      */
     public List<DiseaseForeCastInfoDto> getDissForeCastInfoListKaKaoMap(String prmZnCdNm, String prmLowrnkZnCdNm) {
         List<Tuple> list = diseaseForeCastInfoRepository.searchDissInfoListKaKaoMap(prmZnCdNm, prmLowrnkZnCdNm, getNowTime());
-        
+
         return DiseaseForeCastInfoDto.fromList(list);
     }
 
