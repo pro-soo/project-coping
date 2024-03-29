@@ -76,10 +76,11 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-size: 14px;
 }
 
 #placesList .item .info {
-    padding: 10px 0 10px 55px;
+    padding: 10px 0 10px 40px;
 }
 
 #placesList .info .gray {
@@ -87,7 +88,7 @@
 }
 
 #placesList .info .jibun {
-    padding-left: 26px;
+    padding-left: 30px;
     background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
 }
 
@@ -100,7 +101,7 @@
     position: absolute;
     width: 36px;
     height: 37px;
-    margin: 10px 0 0 10px;
+    margin: 5px 0 0 5px;
     background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
 }
 
