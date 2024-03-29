@@ -653,6 +653,10 @@ section {
   padding: 40px 80px;
   width: 100%;
 }
+.why-us .icon-boxes .icon-box:hover {
+  cursor : pointer;
+  box-shadow: 5px 5px 5px 5px rgba(20, 69, 166, 0.7);
+}
 
 .why-us .icon-boxes .icon-box i {
   font-size: 40px;
