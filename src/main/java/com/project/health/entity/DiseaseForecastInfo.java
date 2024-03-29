@@ -31,16 +31,14 @@ public class DiseaseForecastInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "risk")
     private RiskGradeCode riskGradeCode;
-    private String dissRiskXpln; //질병 위험도지침
 
     @Builder
-    public DiseaseForecastInfo(int id, String dissCd, String dt, String lowrnkZnCd, int cnt, int risk, String dissRiskXpln) {
+    public DiseaseForecastInfo(int id, String dissCd, String dt, String lowrnkZnCd, int cnt, int risk) {
         this.id = id;
         this.diseaseCode = DiseaseCode.builder().dissCd(dissCd).build();
         this.dt = dt;
         this.regionCode = RegionCode.builder().lowrnkZnCd(lowrnkZnCd).build();
         this.cnt = cnt;
         this.riskGradeCode = RiskGradeCode.builder().risk(risk).build();
-        this.dissRiskXpln = dissRiskXpln;
     }
 }

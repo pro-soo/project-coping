@@ -105,7 +105,7 @@ spring:
     hibernate:
       ddl-auto: create-drop # When you launch the application for the first time - switch "none" at "create"
       defer-datasource-initialization: true
-    show-sql: true
+    show-sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false

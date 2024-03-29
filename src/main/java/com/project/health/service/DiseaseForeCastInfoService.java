@@ -47,8 +47,7 @@ public class DiseaseForeCastInfoService {
                             .dt(itemMap.get("dt").toString())
                             .lowrnkZnCd(itemMap.get("lowrnkZnCd").toString())
                             .cnt(Integer.parseInt(itemMap.get("cnt").toString()))
-                            .risk(Integer.parseInt(itemMap.get("risk").toString()))
-                            .dissRiskXpln(itemMap.get("dissRiskXpln").toString()).build();
+                            .risk(Integer.parseInt(itemMap.get("risk").toString())).build();
                     cnt++;
                     diseaseForeCastInfoRepository.save(diseaseForecastInfo);
                 }

@@ -22,17 +22,15 @@ public class DiseaseForeCastInfoDto {
     private String dt; //예측일자
     private String cnt; //질병 예측진료건수
     private String riskNm; //질병 예측위험도 명
-    private String dissRiskXpln; //질병 위험도지침
     private String dissCdNm; //질병명
 
     @Builder
-    public DiseaseForeCastInfoDto(String lowrnkZnCdNm, String znCdNm, String dt, String cnt, String riskNm, String dissRiskXpln, String dissCdNm) {
+    public DiseaseForeCastInfoDto(String lowrnkZnCdNm, String znCdNm, String dt, String cnt, String riskNm, String dissCdNm) {
         this.lowrnkZnCdNm = lowrnkZnCdNm;
         this.znCdNm = znCdNm;
         this.dt = dt;
         this.cnt = cnt;
         this.riskNm = riskNm;
-        this.dissRiskXpln = dissRiskXpln;
         this.dissCdNm = dissCdNm;
     }
 
@@ -47,7 +45,6 @@ public class DiseaseForeCastInfoDto {
                 .dt(d.getDt())
                 .cnt(String.valueOf(d.getCnt()))
                 .riskNm(riskGradeCode.getRiskNm())
-                .dissRiskXpln(d.getDissRiskXpln())
                 .dissCdNm(diseaseCode.getDissCdNm())
                 .build();
     }
