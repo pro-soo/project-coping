@@ -117,36 +117,45 @@
     </section><!-- End Why Us Section -->
 
     <!-- ======= Contact Section ======= -->
-    <th:block th:if="${result != null}">
+
         <section id="contact" class="contact">
-            <div class="container">
 
-                <div class="section-title">
-                    <h2>Hospital</h2>
-                    <p th:text="${keyword} + 목록"></p>
-                </div>
-            </div>
+            <th:block th:if="${result != null} and ${keyword != ''}">
+                <div class="container">
 
-            <!-- 카카오맵 API -->
-            <div id="map" style="margin-left: 25%;width:60%;height:500px;"></div>
-            <div id="menu_wrap" style=" width:15%; height:500px;" class="bg_white">
-                <div class="option">
-                    <div>
-                        <form onsubmit="searchPlaces(); return false;">
-                            <b>키워드 : <input type="text" th:value="${keyword}" id="keyword" size="20" th:readonly="readonly"></b>
-                        </form>
+                    <div class="section-title">
+                        <h2>Hospital</h2>
+                        <p th:text="${keyword} + 목록"></p>
                     </div>
                 </div>
-                <hr>
-                <ul id="placesList" style="padding: 0"></ul>
-                <div id="pagination"></div>
-            </div>
-    </th:block>
+
+                <!-- 카카오맵 API -->
+                <div id="map" style="margin-left: 25%;width:60%;height:500px;"></div>
+                <div id="menu_wrap" style=" width:15%; height:500px;" class="bg_white">
+                    <div class="option">
+                        <div>
+                            <form onsubmit="searchPlaces(); return false;">
+                                <input type="hidden" th:value="${keyword}" id="keyword" size="20" th:readonly="readonly">
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+                    <ul id="placesList" style="padding: 0"></ul>
+                    <div id="pagination"></div>
+                </div>
+            </th:block>
             <script type="text/javascript"
                     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=326a73fe3d4e94b0132a2dc8188b7352&libraries=services,clusterer,drawing"></script>
             <script src="https://code.jquery.com/jquery-3.7.1.min.js"
                     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
             <script th:inline="javascript">
+                var key = [[${keyword}]];
+
+                if(key.length < 2){
+                    alert("결과 값이 없습니다.");
+                    location.href = "/api";
+                }
+
                 // 넘어온 값이 1인 경우 kakao map 으로 이동
                 var resMapYn = [[${mapYn}]];
                 // console.log(resMapYn);
@@ -181,7 +190,7 @@
                     var keyword = document.getElementById('keyword').value;
 
                     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                        alert('키워드를 입력해주세요!');
+                        // alert('키워드를 입력해주세요!');
                         return false;
                     }
 

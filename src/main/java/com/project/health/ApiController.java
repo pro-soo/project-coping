@@ -28,10 +28,19 @@ public class ApiController {
     @GetMapping("/api")
     public String getOpenApi(Model model) {
         try {
+            String[] str = {"11", "26", "27", "28", "29", "30", "31", "41", "42", "43", "44", "45", "46", "47", "48", "49"};
+
+            for (int j = 0; j < str.length; j++) {
+                for (int i = 1; i < 5; i++) {
+                    diseaseForeCastInfoService.getAPIList(i + "", str[j]);
+                }
+            }
             model.addAttribute("region", regionCodeService.getRegionCodes());
             model.addAttribute("keyword", "서울");
         } catch (NullPointerException e) {
             log.error("NullPointerException 발생!");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         return "DiseaseInfoList";
@@ -51,7 +60,10 @@ public class ApiController {
             for (int i = 1; i < 5; i++) {
                 foreCastInfoDtoList = diseaseForeCastInfoService.getAPIList(i + "", prmZnCd, prmLowrnkZnCd);
             }
-            String keyWord = foreCastInfoDtoList.get(0).getZnCdNm() + " " + foreCastInfoDtoList.get(0).getLowrnkZnCdNm();
+            String keyWord = "";
+            if(foreCastInfoDtoList.size() != 0){
+                keyWord = foreCastInfoDtoList.get(0).getZnCdNm() + " " + foreCastInfoDtoList.get(0).getLowrnkZnCdNm();
+            }
 
             model.addAttribute("region", regionCodeService.getRegionCodes());
             model.addAttribute("result", foreCastInfoDtoList);
