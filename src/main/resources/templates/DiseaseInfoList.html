@@ -288,9 +288,11 @@
                             '<div class="info">' +
                             '   <h5>' + places.place_name + '</h5>';
 
+                    var place = places.address_name;
+
                     if (places.road_address_name) {
                         itemStr += '    <span>' + places.road_address_name + '</span>' +
-                            '   <span class="jibun gray">' + places.address_name + '</span>';
+                            '   <button class="jibun gray" onclick="clickMap(\''+place+'\');">' + places.address_name + '</button>';
                     } else {
                         itemStr += '    <span>' + places.address_name + '</span>';
                     }
@@ -302,6 +304,10 @@
                     el.className = 'item';
 
                     return el;
+                }
+
+                function clickMap(place){
+                    window.open("https://map.kakao.com/link/search/"+place, "_blank", "width=1000, height=800");
                 }
 
                 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
