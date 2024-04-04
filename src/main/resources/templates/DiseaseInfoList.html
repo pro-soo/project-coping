@@ -48,7 +48,7 @@
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <h1 class="logo me-auto "><a th:href="@{/api}">Coping</a></h1>
+        <h1 class="logo me-auto "><a th:href="@{/api}">Coping - 질병예측정보</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="DiseaseInfoList.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -64,8 +64,8 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
     <div class="container mb-5">
-        <h1 style="margin-bottom: 10px; font-weight: bold">Coping에 오신 것을 환영합니다.</h1>
-        <h6>고객님이 선택한 지역의 질병 예측 위험도, 예상 발생 건수와 진료가능한 병원을 찾아 드립니다. </h6>
+        <h1 style="margin-bottom: 10px; font-weight: bold">고객님이 선택한 지역의 질병 예측 위험도, <br>예상 발생 건수와 진료가능한 병원을 찾아 드립니다.</h1>
+<!--        <h6>고객님이 선택한 지역의 질병 예측 위험도, 예상 발생 건수와 진료가능한 병원을 찾아 드립니다. </h6>-->
         <form th:action="@{/api}" method="post" id="form">
             <label>
                 <select class="form-select" th:name="znCd" id="selZnCd" th:onchange="getLowrnkZnCd()">
@@ -79,7 +79,7 @@
                     <option th:value="0"> 하위 지역 선택 </option>
                 </select>
             </label>
-            <button class="btn-get-started" type="button" th:onclick="sendForm()">검색</button>
+            <button class="btn-get-started" type="button" th:onclick="sendForm()">선 택</button>
             <h6 style="font-size: 13px">&nbsp;&nbsp;&nbsp;상위 지역 예시)서울 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;하위 지역 예시)중구</h6>
         </form>
     </div>
@@ -92,8 +92,10 @@
             <div class="">
                 <div class="">
                     <div class="icon-boxes">
+                        <th:block th:if="${result != null}">
+                        <h5 style="padding-bottom: 10px; font-weight: bold; color: black;">아래의 질병을 클릭하시면, 해당 질병을 진료 가능한 병원 정보를 제공합니다.  </h5>
+                        </th:block>
                         <div class="d-flex justify-content-between">
-
                             <div class="d-flex align-items-stretch" th:each="diseaseInfoList : ${result}">
                                 <div class="icon-box mt-4 mt-xl-0" style=""
                                      th:onclick="|location.href='@{/api/{dissCdNm}/{znCdNm}/{lowrnkZnCdNm}(dissCdNm=${diseaseInfoList.dissCdNm},znCdNm=${diseaseInfoList.znCdNm}, lowrnkZnCdNm=${diseaseInfoList.lowrnkZnCdNm})}'|">
@@ -124,8 +126,9 @@
                 <div class="container">
 
                     <div class="section-title">
-                        <h2>Hospital</h2>
+                        <h2>병 원</h2>
                         <p th:text="${keyword} + 목록"></p>
+                        <p style="padding : 10px; color: black; font-weight: bold;">※ 좌측 병원 목록에서 원하는 병원을 클릭하시면 카카오맵으로 연결됩니다. ※</p>
                     </div>
                 </div>
 
@@ -283,16 +286,15 @@
                 // 검색결과 항목을 Element로 반환하는 함수입니다
                 function getListItem(index, places) {
 
+                    var place = places.address_name;
                     var el = document.createElement('li'),
                         itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-                            '<div class="info">' +
+                            '<div class="info" onclick="clickMap(\''+place+'\');">' +
                             '   <h5>' + places.place_name + '</h5>';
-
-                    var place = places.address_name;
 
                     if (places.road_address_name) {
                         itemStr += '    <span>' + places.road_address_name + '</span>' +
-                            '   <button class="jibun gray" onclick="clickMap(\''+place+'\');">' + places.address_name + '</button>';
+                            '   <span class="jibun gray" >' + places.address_name + '</span>';
                     } else {
                         itemStr += '    <span>' + places.address_name + '</span>';
                     }
