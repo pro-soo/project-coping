@@ -1,7 +1,12 @@
 plugins {
 	id 'java'
+	id 'war'
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+bootWar {
+	enabled = true
 }
 
 group = 'com.project'
@@ -41,6 +46,8 @@ dependencies {
 
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23' // 추가
 	runtimeOnly 'org.postgresql:postgresql' // 추가
+
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat' // war
 }
 
 tasks.named('test') {
